@@ -1,0 +1,50 @@
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  margin: auto;
+  width: 80%; /* Full-width */
+  height: 7px;
+  /* background: #d3d3d3; Grey background */
+  background: repeating-linear-gradient(
+    to right,
+    #969696 0% 10%,
+    #d1d1d1 10% 20%
+  );
+
+  outline: none; /* Remove outline */
+}
+
+.slider[value=""]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  cursor: pointer; /* Cursor on hover */
+  height: 0;
+  height: 0;
+  width: 0;
+  background: none; /* Green background */
+
+  /* display: none; */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 3px; /* Set a specific slider handle width */
+  height: 20px; /* Slider handle height */
+  background: #161616; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+/* Got from w3 scxhooles,  */
+/* TODO: Make work for mozilla etc. */
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04aa6d; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}

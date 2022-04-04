@@ -6,21 +6,35 @@ import Experiment, {
   ProgressBar,
   WizardProgress,
   DevTools,
+  withGridItem,
 } from "@hcikit/react";
-import IncrementTask from "./IncrementTask";
-import CustomTask from "./CustomTask";
 
+import CommandSelection from "./CommandSelection";
+import DivergentTest from "./DivergentTest";
+import CreativitySupportIndex from "./CreativitySupportIndex";
 import configuration from "./configuration";
+import Tutorial from "./Tutorial";
+
+const ProseConsentForm = withGridItem(({ children, ...props }) => {
+  return (
+    <div className="mx-auto prose max-w-none">
+      {/* @ts-ignore */}
+      <ConsentForm {...props} />
+    </div>
+  );
+}, "task");
 
 let tasks = {
-  CustomTask,
-  ConsentForm,
+  ConsentForm: ProseConsentForm,
   InformationScreen,
   DisplayText,
   ProgressBar,
   WizardProgress,
   DevTools,
-  IncrementTask,
+  CommandSelection,
+  DivergentTest,
+  CreativitySupportIndex,
+  Tutorial,
 };
 
 const App: React.FunctionComponent = () => {
