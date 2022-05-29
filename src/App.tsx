@@ -8,12 +8,15 @@ import Experiment, {
   DevTools,
   withGridItem,
 } from "@hcikit/react";
+import S3Upload from "./S3Upload";
 
 import CommandSelection from "./CommandSelection";
 import DivergentTest from "./DivergentTest";
 import CreativitySupportIndex from "./CreativitySupportIndex";
 import configuration from "./configuration";
 import Tutorial from "./Tutorial";
+import Questionnaire from "./Questionnaire";
+import NasaTlx from "./NasaTlx";
 
 const ProseConsentForm = withGridItem(({ children, ...props }) => {
   return (
@@ -35,6 +38,9 @@ let tasks = {
   DivergentTest,
   CreativitySupportIndex,
   Tutorial,
+  Questionnaire,
+  NasaTlx,
+  S3Upload,
 };
 
 const App: React.FunctionComponent = () => {

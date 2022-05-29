@@ -1,44 +1,28 @@
-import { menus } from "@blainelewis1/menus";
+import { MenuItem, menus } from "@blainelewis1/menus";
 import { useExperiment, withGridItem } from "@hcikit/react";
-import { useRef } from "react";
-import {
-  Save,
-  Bold,
-  Italic,
-  Underline,
-  AlignLeft,
-  AlignRight,
-  AlignCenter,
-  AlignJustify,
-  Copy,
-} from "styled-icons/fa-solid";
+import { useRef, useState } from "react";
 import SelectionArea from "./SelectionArea";
 
-const items = [
-  { icon: Save, label: "Save" },
-  { icon: Bold, label: "Bold" },
-  { icon: Italic, label: "Italic" },
-  { icon: Underline, label: "Underline" },
-  { icon: AlignLeft, label: "Align Left" },
-  { icon: AlignCenter, label: "Align Center" },
-  { icon: AlignRight, label: "Align Right" },
-  { icon: AlignJustify, label: "Align Justify" },
-  { icon: Copy, label: "Copy" },
-];
-
-const Tutorial: React.FunctionComponent<{ menu: string }> = ({ menu }) => {
+const Tutorial: React.FunctionComponent<{
+  menu: string;
+  tutorialSelections?: number;
+  items: Array<MenuItem>;
+}> = ({ menu, tutorialSelections = 3, items }) => {
   const { advance } = useExperiment();
+  const [selectionsRemaining, setSelectionsRemaining] =
+    useState(tutorialSelections);
   const Menu = menus[menu];
   const selectionAreaRef = useRef<HTMLDivElement>(null);
   const menuSpecificInstructions = {
-    Toolbar:
-      "The toolbar is always visible across the top of the target area. To select an item you can simply click the corresponding button",
-    ContextMenu:
-      "Right click anywhere within the target area to open the menu. Once the menu is open you can click any of the items to complete the selection.",
+    KeyboardShortcutsWithCheatsheet:
+      "Keyboard shortcuts are used by pressing the prescribed modifier key (eg. command, ctrl, alt, etc.) and the corresponding keys. In this case there is a cheatsheet showing the shortcuts available.",
+    ToolPalette:
+      "A tool palette simply requires you to click on the tool you would like to select.",
+    MarkingMenu:
+      "A marking menu is a somewhat complex menu that has two modes of invocation. As a beginner you can press the mouse button down and wait for a short delay. After the delay the menu items appear, you can simply draw a mark towards one of the menus and release to select it. In some cases there is a hierarchy of items and you must draw to the location of the parent item, and then its children will appear. You can then complete the selection as before, by drawing a line to the item and then releasing. Alternatively you can select an item without waiting for the delay, simply by drawing the corresponding mark.",
   };
 
-  const moreInstructions =
-    'To continue to the main experiment select the "save" item.';
+  const moreInstructions = `To continue to the main experiment select ${selectionsRemaining} items from the menu.`;
 
   return (
     <div className="flex flex-col h-full max-w-4xl py-8 mx-auto">
@@ -48,10 +32,14 @@ const Tutorial: React.FunctionComponent<{ menu: string }> = ({ menu }) => {
       <p className="font-bold">{moreInstructions}</p>
       <SelectionArea selectionAreaRef={selectionAreaRef}>
         <Menu
-          onSelectItem={(item) => {
-            if (item === "Save") {
+          onSelectItem={() => {
+            if (selectionsRemaining - 1 === 0) {
               advance();
             }
+
+            setSelectionsRemaining(
+              (selectionsRemaining) => selectionsRemaining - 1
+            );
           }}
           items={items}
           parent={selectionAreaRef}

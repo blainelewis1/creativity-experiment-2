@@ -7,6 +7,7 @@ const DivergentTest: React.FunctionComponent<{
   question: string;
   timeLimit: number;
 }> = ({ question, timeLimit = 60 * 3 * 1000 }) => {
+  // TODO: could be nice if this was a multi-step piece as well, with one step being the judging and one step being the question
   const { log, advance } = useExperiment();
   const [values, setValues] = useState<Array<string>>([]);
   const [, setShouldUpdate] = useState(0);
@@ -14,6 +15,10 @@ const DivergentTest: React.FunctionComponent<{
   const [topTwo, setTopTwo] = useState<Record<string, boolean>>({});
   const [message, setMessage] = useState("");
   const startTime = useRef(Date.now());
+
+  useEffect(() => {
+    log({ type: "DIVERGENT_CHANGE", values });
+  }, [values, log]);
 
   useEffect(() => {
     setTimeout(() => {

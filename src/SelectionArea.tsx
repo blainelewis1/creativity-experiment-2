@@ -5,7 +5,7 @@ const SelectionArea: React.FunctionComponent<{
 }> = ({ selectionAreaRef, children }) => {
   return (
     <div
-      className="flex-1 w-full mx-auto border-2 border-gray-400 border-dashed bg-gray-50"
+      className="flex-1 w-full max-h-full mx-auto border-2 border-gray-400 border-dashed bg-gray-50"
       ref={selectionAreaRef}
     >
       {children}

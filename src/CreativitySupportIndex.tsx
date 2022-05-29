@@ -1,8 +1,8 @@
 import { useExperiment, withGridItem } from "@hcikit/react";
 import { Button } from "@material-ui/core";
 import { shuffle } from "lodash";
-import React, { useState } from "react";
-import "./slider.css";
+import React, { useRef, useState } from "react";
+import Slider from "./components/Slider";
 
 const CreativitySupportIndex: React.FunctionComponent = () => {
   // TODO: I should consider using the actual experiment framework and a generator to do the CSI bits... Like split out a PairedFactor component and an AgreementStatement component, then generate a config that works for it...
@@ -24,32 +24,38 @@ const CreativitySupportIndex: React.FunctionComponent = () => {
     />,
   ];
 
-  return <div className="max-w-4xl py-12 mx-auto ">{states[currentIndex]}</div>;
+  return <div className="max-w-4xl py-12 mx-auto">{states[currentIndex]}</div>;
 };
 
 const AgreementStatements: React.FunctionComponent<{
   onComplete: (responses: Record<string, number>) => void;
 }> = ({ onComplete }) => {
   // TODO: maybe split it into two screens?
-  const questions = shuffle([
-    // "The system or tool allowed other people to work with me easily.",
-    // "It was really easy to share ideas and designs with other people inside this system or tool.",
-    "I would be happy to use this system or tool on a regular basis.",
-    "I enjoyed using the system or tool.",
-    "It was easy for me to explore many different ideas, options, designs, or outcomes, using this system or tool.",
-    "The system or tool was helpful in allowing me to track different ideas, outcomes, possibilities.",
-    "I was able to be very creative while doing the activity inside this system or tool.",
-    "The system or tool allowed me to be very expressive.",
-    "My attention was fully tuned to the activity, and I forgot about the system or tool that I was using.",
-    "I became so absorbed in the activity that I forgot about the system or tool that I was using.",
-    "I was satisfied with what I got out of the system or tool.",
-    "What I was able to produce was worth the effort I had to exert to produce it.",
-  ]);
+
+  const questionsRef = useRef(
+    shuffle([
+      // "The system or tool allowed other people to work with me easily.",
+      // "It was really easy to share ideas and designs with other people inside this system or tool.",
+      "I would be happy to use this system or tool on a regular basis.",
+      "I enjoyed using the system or tool.",
+      "It was easy for me to explore many different ideas, options, designs, or outcomes, using this system or tool.",
+      "The system or tool was helpful in allowing me to track different ideas, outcomes, possibilities.",
+      "I was able to be very creative while doing the activity inside this system or tool.",
+      "The system or tool allowed me to be very expressive.",
+      "My attention was fully tuned to the activity, and I forgot about the system or tool that I was using.",
+      "I became so absorbed in the activity that I forgot about the system or tool that I was using.",
+      "I was satisfied with what I got out of the system or tool.",
+      "What I was able to produce was worth the effort I had to exert to produce it.",
+    ])
+  );
 
   const [responses, setResponses] = useState<
     Record<string, number | undefined>
-  >(
-    questions.reduce((acc, question) => ({ ...acc, [question]: undefined }), {})
+  >(() =>
+    questionsRef.current.reduce(
+      (acc, question) => ({ ...acc, [question]: undefined }),
+      {}
+    )
   );
 
   return (
@@ -66,23 +72,22 @@ const AgreementStatements: React.FunctionComponent<{
         Please rate your agreement with the following statements:
       </p>
       <div className="grid gap-10 px-4">
-        {questions.map((question) => (
+        {questionsRef.current.map((question) => (
           <div>
             <p className="mb-3 text-lg font-light text-gray-700">{question}</p>
             <div className="flex gap-4 px-8 text-center">
               <span className="text-sm text-gray-700">Highly Disagree</span>
-              <input
-                className="flex-1 w-full cursor-pointer slider"
+              <Slider
+                min="0"
+                max="100"
                 required
-                type="range"
-                value={responses[question]}
                 onChange={(e) => {
-                  console.log(e.target);
                   setResponses((prev) => ({
                     ...prev,
                     [question]: e.target.valueAsNumber,
                   }));
                 }}
+                value={responses[question]}
               />
               <span className="text-sm text-gray-700">Highly Agree</span>
             </div>
@@ -117,8 +122,8 @@ const PairedFactors: React.FunctionComponent<{
     "Work with other people",
   ];
 
-  const comparisons = shuffle(
-    factors.flatMap((v, i) => factors.slice(i + 1).map((w) => [v, w]))
+  const comparisonsRef = useRef(
+    shuffle(factors.flatMap((v, i) => factors.slice(i + 1).map((w) => [v, w])))
   );
 
   const [currentComparison, setCurrentComparison] = useState(0);
@@ -127,14 +132,19 @@ const PairedFactors: React.FunctionComponent<{
       factors: [string, string];
       response: 0 | 1 | undefined;
     }>
-  >(comparisons.map(([a, b]) => ({ factors: [a, b], response: undefined })));
+  >(
+    comparisonsRef.current.map(([a, b]) => ({
+      factors: [a, b],
+      response: undefined,
+    }))
+  );
 
   return (
     <form
       onSubmit={(e) => {
-        if (currentComparison === comparisons.length - 1) {
+        if (currentComparison === comparisonsRef.current.length - 1) {
           onComplete(responses);
-        } else {
+        } else if (responses[currentComparison].response !== undefined) {
           setCurrentComparison((prev) => prev + 1);
         }
         e.preventDefault();
@@ -146,10 +156,13 @@ const PairedFactors: React.FunctionComponent<{
       </p>
       <div className="flex items-center justify-center mx-auto my-10 text-center">
         {responses[currentComparison].factors.map((factor, j) => (
-          <label>
+          <label htmlFor={j.toString()}>
             {j === 0 ? factor : ""}
             <input
               type="radio"
+              id={j.toString()}
+              name="factor"
+              value={j}
               className="mx-3"
               checked={responses[currentComparison].response === j}
               onChange={() =>
