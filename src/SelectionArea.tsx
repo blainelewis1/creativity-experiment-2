@@ -2,6 +2,7 @@ import React from "react";
 
 const SelectionArea: React.FunctionComponent<{
   selectionAreaRef: React.Ref<HTMLDivElement>;
+  children: React.ReactNode;
 }> = ({ selectionAreaRef, children }) => {
   return (
     <div

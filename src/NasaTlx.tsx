@@ -1,5 +1,5 @@
 import { useExperiment, withGridItem } from "@hcikit/react";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import React, { useRef, useState } from "react";
 import Slider from "./components/Slider";
 

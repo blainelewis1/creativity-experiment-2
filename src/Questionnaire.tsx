@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import Slider from "./components/Slider";
 import { useExperiment } from "@hcikit/react";
 

@@ -1,10 +1,10 @@
 module.exports = {
-  purge: [
+  content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html",
-    "./node_modules/@blainelewis1/menus/**/*.{js,jsx,ts,tsx}",
+    // "./node_modules/@blainelewis1/menus/**/*.{js,jsx,ts,tsx}",
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "media", // or 'media' or 'class'
   // corePlugins: { preflight: false },
   theme: {
     extend: {},

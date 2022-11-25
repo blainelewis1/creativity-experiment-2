@@ -1,4 +1,4 @@
-import { map, range, shuffle, sum, times, zip } from "lodash";
+import { range, shuffle, sum, times, zip } from "lodash";
 
 import {
   Undo,
@@ -22,9 +22,9 @@ import {
   FormatIndentIncrease,
   // TODO: FormatClear
   FormatClear,
-} from "styled-icons/material";
+} from "emotion-icons/material";
 
-import { flattenMenu, MenuItem } from "@blainelewis1/menus";
+import { MenuItem } from "@blainelewis1/menus";
 
 import ConsentLetter from "./consent";
 

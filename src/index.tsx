@@ -1,10 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import App from "./App";
 import "./index.css";
+import "@blainelewis1/menus/dist/style.css";
 
-import { ReactFromModule } from "@blainelewis1/menus";
-console.log(React === ReactFromModule); //false
+import { createRoot } from "react-dom/client";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const container = document.getElementById("root");
+const root = createRoot(container!);
+root.render(<App />);

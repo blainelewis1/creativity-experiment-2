@@ -1,5 +1,5 @@
 import { useExperiment, withGridItem } from "@hcikit/react";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { pickBy } from "lodash";
 import { useEffect, useRef, useState } from "react";
 

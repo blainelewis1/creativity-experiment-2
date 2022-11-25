@@ -1,6 +1,6 @@
 import { useExperiment, withGridItem } from "@hcikit/react";
 import { useRef } from "react";
-import { Menu, MenuComponent, MenuItem, menus } from "@blainelewis1/menus";
+import { MenuComponent, MenuItem, menus } from "@blainelewis1/menus";
 import SelectionArea from "./SelectionArea";
 
 const CommandSelection: React.FunctionComponent<{
