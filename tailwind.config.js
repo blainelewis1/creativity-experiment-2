@@ -1,10 +1,6 @@
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html",
-    // "./node_modules/@blainelewis1/menus/**/*.{js,jsx,ts,tsx}",
-  ],
-  darkMode: "media", // or 'media' or 'class'
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  darkMode: "media",
   // corePlugins: { preflight: false },
   theme: {
     extend: {},
