@@ -12,7 +12,7 @@ const DivergentTest: React.FunctionComponent<{
   const [values, setValues] = useState<Array<string>>([]);
   const [, setShouldUpdate] = useState(0);
   const [locked, setLocked] = useState(false);
-  const [topTwo, setTopTwo] = useState<Record<string, boolean>>({});
+  const [topTwo, setTopTwo] = useState<Array<boolean>>([]);
   const [message, setMessage] = useState("");
   const startTime = useRef(Date.now());
 
@@ -48,7 +48,7 @@ const DivergentTest: React.FunctionComponent<{
       onSubmit={(e) => {
         const selectedTwo = Object.keys(pickBy(topTwo, (v) => v));
         if (selectedTwo.length === 2) {
-          log({ type: "DivergentTest", values, topTwo: selectedTwo });
+          log({ type: "DivergentTest", values, topTwo });
           advance();
         } else if (selectedTwo.length > 2) {
           setMessage("You may only choose 2 of your responses.");
@@ -70,17 +70,18 @@ const DivergentTest: React.FunctionComponent<{
             className="grid items-center gap-2"
             style={{ gridTemplateColumns: "min-content auto" }}
           >
-            {values.map((value) => (
+            {values.map((value, i) => (
               <label className="contents">
                 <input
                   type="checkbox"
                   onChange={(e) => {
-                    setTopTwo((prev) => ({
-                      ...prev,
-                      [value]: e.target.checked,
-                    }));
+                    setTopTwo((prev) => {
+                      let newVal = [...prev];
+                      newVal[i] = e.target.checked;
+                      return newVal;
+                    });
                   }}
-                  checked={Boolean(topTwo[value])}
+                  checked={topTwo[i]}
                 />
                 <span>{value}</span>
               </label>

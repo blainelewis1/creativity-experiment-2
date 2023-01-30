@@ -27,3 +27,4 @@ yarn-error.log*
 !.yarn/releases
 !.yarn/plugins
 .pnp.*
+node_modules.nosync

@@ -27,6 +27,7 @@ import {
 import { MenuItem } from "@blainelewis1/menus";
 
 import ConsentLetter from "./consent";
+import { getAllMetadata } from "@hcikit/workflow";
 
 const objects = shuffle(["knife", "brick", "shoe"]);
 const menus = shuffle([
@@ -44,6 +45,7 @@ const items = [
       {
         icon: FormatPaint,
         label: "Paint format",
+        // TODO: Idk if this is correct
         shortcut: "mod+r",
         angle: (5 * Math.PI) / 4,
       },
@@ -108,16 +110,69 @@ const items = [
     label: "Alignment",
   },
   // 20.
-
-  { icon: Print, label: "Print", shortcut: "mod+p" },
-  { icon: Spellcheck, label: "Spellcheck", shortcut: "mod+alt+x" },
-  { icon: InsertLink, label: "Insert link", shortcut: "mod+k" },
-  { icon: AddComment, label: "Add comment", shortcut: "mod+alt+m" },
+  {
+    items: [
+      {
+        icon: Print,
+        label: "Print",
+        shortcut: "mod+p",
+        angle: (3 * Math.PI) / 2,
+      },
+      {
+        icon: Spellcheck,
+        label: "Spellcheck",
+        shortcut: "mod+alt+x",
+        angle: Math.PI / 2,
+      },
+      {
+        icon: InsertLink,
+        label: "Insert link",
+        shortcut: "mod+k",
+        angle: Math.PI,
+      },
+      {
+        icon: AddComment,
+        label: "Add comment",
+        shortcut: "mod+alt+m",
+        angle: 0,
+      },
+    ],
+    angle: (3 * Math.PI) / 4,
+    unselectable: true,
+    label: "Miscellaneous",
+  },
   // { icon:  label:"//"}TODO: Checklist, shortcut: "mod+shift+9"},
-  { icon: FormatListBulleted, label: "Bulleted list", shortcut: "mod+shift+8" },
-  { icon: FormatListNumbered, label: "Numbered list", shortcut: "mod+shift+7" },
-  { icon: FormatIndentDecrease, label: "Decrease indent", shortcut: "mod+[" },
-  { icon: FormatIndentIncrease, label: "Increase indent", shortcut: "mod+]" },
+  {
+    items: [
+      {
+        icon: FormatListBulleted,
+        label: "Bulleted list",
+        shortcut: "mod+shift+8",
+        angle: (3 * Math.PI) / 2,
+      },
+      {
+        icon: FormatListNumbered,
+        label: "Numbered list",
+        shortcut: "mod+shift+7",
+        angle: Math.PI / 2,
+      },
+      {
+        icon: FormatIndentDecrease,
+        label: "Decrease indent",
+        shortcut: "mod+[",
+        angle: Math.PI,
+      },
+      {
+        icon: FormatIndentIncrease,
+        label: "Increase indent",
+        shortcut: "mod+]",
+        angle: 0,
+      },
+    ],
+    angle: (5 * Math.PI) / 4,
+    unselectable: true,
+    label: "Lists + Indent",
+  },
 ];
 
 export function* iterateMenu(items: Array<MenuItem>) {
@@ -182,8 +237,6 @@ const distributedItems = zip(occurrenceCounts, ranking)
   .map(([count, item]) => times(count ?? 0, () => item ?? ""))
   .flat();
 
-console.log(distributedItems);
-
 const url = new URL(window.location.href);
 const participant_id = url.searchParams.get("participant_id");
 const conditions = zip(objects, menus).map(([object, menu]) => {
@@ -227,39 +280,46 @@ const conditions = zip(objects, menus).map(([object, menu]) => {
 
 const configuration = {
   participant_id,
+  metadata: {
+    ...getAllMetadata,
+    git_commit: process.env.REACT_APP_GIT_HASH,
+    package_version: process.env.REACT_APP_PACKAGE_VERSION,
+    build_time: process.env.REACT_APP_BUILD_TIME,
+  },
   tasks: ["ProgressBar", "DevTools"],
+  DevTools: { showInProduction: true },
   children: [
-    {
-      task: "ConsentForm",
+    // {
+    //   task: "ConsentForm",
 
-      content: ConsentLetter,
-      questions: [
-        {
-          label: "I understand and consent to the above.",
-          required: true,
-        },
-        {
-          label:
-            "Yes: Video and audio recordings or frame grabs of the session may be used.",
-          required: false,
-        },
-        {
-          label:
-            "No: Video and audio recordings or frame grabs of the session may not be used.",
-          required: false,
-        },
-      ],
-    },
+    //   content: ConsentLetter,
+    //   questions: [
+    //     {
+    //       label: "I understand and consent to the above.",
+    //       required: true,
+    //     },
+    //     {
+    //       label:
+    //         "Yes: Video and audio recordings or frame grabs of the session may be used.",
+    //       required: false,
+    //     },
+    //     {
+    //       label:
+    //         "No: Video and audio recordings or frame grabs of the session may not be used.",
+    //       required: false,
+    //     },
+    //   ],
+    // },
     {
       task: "InformationScreen",
       content: `
-In order to complete this experiment you will first be given a computer menu, and taught how to use it. Following that you will complete a series of questionnaires about your experience. You will do this again with another menu. Please answer the questions about your experience carefully and take your time.`,
+In order to complete this experiment you will first be given a computer menu, and taught how to use it. Following that you will complete a series of questionnaires about your experience. You will do this twice more with different menus. Please answer the questions about your experience carefully and take your time.`,
     },
     ...conditions,
     {
       task: "S3Upload",
-      filename: "blaine_log",
-      experimenter: "hello@world.com",
+      filename: `${participant_id}.json`,
+      experimenter: "blaine@dgp.toronto.edu",
     },
     {
       task: "InformationScreen",
@@ -268,5 +328,7 @@ Your data has successfully been uploaded. Thank you for completing our experimen
     },
   ],
 };
+
+console.log(configuration);
 
 export default configuration;

@@ -5,8 +5,8 @@ import Experiment, {
   DisplayText,
   ProgressBar,
   WizardProgress,
-  DevTools,
   withGridItem,
+  ProgressText,
 } from "@hcikit/react";
 import S3Upload from "./S3Upload";
 
@@ -17,6 +17,7 @@ import configuration from "./configuration";
 import Tutorial from "./Tutorial";
 import Questionnaire from "./Questionnaire";
 import NasaTlx from "./NasaTlx";
+import DevTools from "./DevTools";
 
 const ProseConsentForm = withGridItem(({ children, ...props }) => {
   return (
@@ -41,6 +42,7 @@ let tasks = {
   Questionnaire,
   NasaTlx,
   S3Upload,
+  ProgressText,
 };
 
 const App: React.FunctionComponent = () => {

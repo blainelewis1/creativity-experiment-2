@@ -2,7 +2,7 @@ import { useExperiment, withGridItem } from "@hcikit/react";
 import { useRef } from "react";
 import { MenuComponent, MenuItem, menus } from "@blainelewis1/menus";
 import SelectionArea from "./SelectionArea";
-
+import ProgressText from "./ProgressText";
 const CommandSelection: React.FunctionComponent<{
   command: string;
   items: Array<MenuItem>;
@@ -15,7 +15,12 @@ const CommandSelection: React.FunctionComponent<{
 
   return (
     <div className="flex flex-col w-2/3 h-full gap-4 py-8 mx-auto">
-      <div className={`text-center text-xl text-gray-700`}>{command}</div>
+      <div className={`text-center  `}>
+        <span className="text-xl text-gray-700">{command}</span>
+        <span className="text-sm text-gray-400">
+          <ProgressText depth={1} />
+        </span>
+      </div>
       <SelectionArea selectionAreaRef={selectionAreaRef}>
         <Menu
           parent={selectionAreaRef}
