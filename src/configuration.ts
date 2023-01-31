@@ -263,7 +263,8 @@ const conditions = zip(objects, menus).map(([object, menu]) => {
         unoriginal ways to use a ${object}; for this task, write down all of the
         unusual, creative, and uncommon uses you can think of.`,
         object,
-        timeLimit: 60 * 1000 * 0.5,
+        // timeLimit: 60 * 1000 * 0.5,
+        timeLimit: 60 * 1000 * 3,
       },
       {
         task: "Questionnaire",
@@ -287,7 +288,7 @@ const configuration = {
     build_time: process.env.REACT_APP_BUILD_TIME,
   },
   tasks: ["ProgressBar", "DevTools"],
-  DevTools: { showInProduction: true },
+  DevTools: { showInProduction: false },
   children: [
     // {
     //   task: "ConsentForm",
