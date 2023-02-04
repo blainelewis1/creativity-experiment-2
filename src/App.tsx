@@ -18,6 +18,8 @@ import Tutorial from "./Tutorial";
 import Questionnaire from "./Questionnaire";
 import NasaTlx from "./NasaTlx";
 import DevTools from "./DevTools";
+import FormTask from "./FormTask";
+import BeginScreen from "./BeginScreen";
 
 const ProseConsentForm = withGridItem(({ children, ...props }) => {
   return (
@@ -43,6 +45,8 @@ let tasks = {
   NasaTlx,
   S3Upload,
   ProgressText,
+  FormTask,
+  BeginScreen,
 };
 
 const App: React.FunctionComponent = () => {

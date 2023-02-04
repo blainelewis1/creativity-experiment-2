@@ -253,7 +253,7 @@ const conditions = zip(objects, menus).map(([object, menu]) => {
         })),
       },
       {
-        task: "InformationScreen",
+        task: "BeginScreen",
         content: `The next screen contains a timed task where you will be given an object and must think of unusual uses for it. Please read the instructions on the page carefully and use the full allotted time to complete the task.`,
       },
       {
@@ -312,9 +312,78 @@ const configuration = {
     //   ],
     // },
     {
+      task: "FormTask",
+      schema: {
+        type: "object",
+        properties: {
+          age: {
+            type: "integer",
+          },
+          gender: {
+            type: "string",
+            enum: [
+              "woman",
+              "man",
+              "non-binary",
+              "prefer not to disclose",
+              "prefer to self-describe",
+            ],
+          },
+          selfDescribe: {
+            type: "string",
+          },
+        },
+        required: ["age", "gender"],
+      },
+      uischema: {
+        type: "VerticalLayout",
+        elements: [
+          {
+            type: "Control",
+            label: "Age",
+            scope: "#/properties/age",
+          },
+
+          {
+            type: "Control",
+            label: "Gender",
+            scope: "#/properties/gender",
+          },
+          {
+            type: "Control",
+            label: "Gender",
+            scope: "#/properties/selfDescribe",
+            rule: {
+              effect: "SHOW",
+              condition: {
+                scope: "#/properties/gender",
+                schema: {
+                  const: "prefer to self-describe",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+    {
       task: "InformationScreen",
       content: `
 In order to complete this experiment you will first be given a computer menu, and taught how to use it. Following that you will complete a series of questionnaires about your experience. You will do this twice more with different menus. Please answer the questions about your experience carefully and take your time.`,
+    },
+    {
+      task: "BeginScreen",
+      content: `The next screen contains a timed task where you will be given an object and must think of unusual uses for it. Please read the instructions on the page carefully and use the full allotted time to complete the task.`,
+    },
+    {
+      task: "DivergentTest",
+      question: `Write down all of the original and creative
+      uses for a ${"newspaper"} that you can think of. There are common,
+      unoriginal ways to use a ${"newspaper"}; for this task, write down all of the
+      unusual, creative, and uncommon uses you can think of.`,
+      object: "newspaper",
+      // timeLimit: 60 * 1000 * 0.5,
+      timeLimit: 60 * 1000 * 3,
     },
     ...conditions,
     {

@@ -47,7 +47,7 @@ const DivergentTest: React.FunctionComponent<{
       className="max-w-3xl py-8 mx-auto"
       onSubmit={(e) => {
         const selectedTwo = Object.keys(pickBy(topTwo, (v) => v));
-        if (selectedTwo.length === 2) {
+        if (selectedTwo.length === Math.min(values.length, 2)) {
           log({ type: "DivergentTest", values, topTwo });
           advance();
         } else if (selectedTwo.length > 2) {
