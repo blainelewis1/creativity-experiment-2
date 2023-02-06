@@ -11,7 +11,7 @@ const CommandSelection: React.FunctionComponent<{
   const selectionAreaRef = useRef<HTMLDivElement>(null);
   const { advance, log } = useExperiment();
 
-  const Menu = (menus as Record<string, MenuComponent>)[menu];
+  const Menu = (menus as Record<string, MenuComponent>)[menu] || null;
 
   return (
     <div className="flex flex-col w-2/3 h-full gap-4 py-8 mx-auto">
@@ -22,17 +22,19 @@ const CommandSelection: React.FunctionComponent<{
         </span>
       </div>
       <SelectionArea selectionAreaRef={selectionAreaRef}>
-        <Menu
-          parent={selectionAreaRef}
-          onSelectItem={(item: string | null) => {
-            if (item === command) {
-              advance();
-            } else {
-              log({ type: "WRONG_COMMAND", item });
-            }
-          }}
-          items={items}
-        />
+        {Menu !== null ? (
+          <Menu
+            parent={selectionAreaRef}
+            onSelectItem={(item: string | null) => {
+              if (item === command) {
+                advance();
+              } else {
+                log({ type: "WRONG_COMMAND", item });
+              }
+            }}
+            items={items}
+          />
+        ) : null}
       </SelectionArea>
     </div>
   );

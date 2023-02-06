@@ -20,6 +20,10 @@ import NasaTlx from "./NasaTlx";
 import DevTools from "./DevTools";
 import FormTask from "./FormTask";
 import BeginScreen from "./BeginScreen";
+import TypingTask from "./TypingTask";
+import MousePositioning from "./MousePositioning";
+import Portalinator from "./Portalinator";
+import RedirectTask from "./RedirectTask";
 
 const ProseConsentForm = withGridItem(({ children, ...props }) => {
   return (
@@ -47,10 +51,18 @@ let tasks = {
   ProgressText,
   FormTask,
   BeginScreen,
+  TypingTask,
+  MousePositioning,
+  RedirectTask,
 };
 
 const App: React.FunctionComponent = () => {
-  return <Experiment tasks={tasks} configuration={configuration} />;
+  return (
+    <>
+      <Portalinator />
+      <Experiment tasks={tasks} configuration={configuration} />
+    </>
+  );
 };
 
 export default App;

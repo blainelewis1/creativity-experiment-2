@@ -16,7 +16,6 @@ I understand the following:
  - By participating in this study I will have the opportunity to experience cutting-edge research computing environment. No other direct benefits are associated with the study.  
  - I will be compensated a total of ==$NEED VALUE==.  
  - All data collected about me will be kept secure. In all data files, my name and identifying features will be removed and replaced with a code in order to preserve my confidentiality. Only the researchers involved in this study will have access to the information I provide. The data collected will be destroyed 5 years after publication of results.
- - Video and audio recordings or frame grabs of the session may be used in published materials or in presentations of this research. I am free to consent or not consent to their usage without any negative consequences, as per the options provided below (check one option below).
  - Data collected may be used in research journals, conferences, or other scholarly activities. In these cases, my name will not be used and will be replaced with an identifier (e.g., Participant 1) and no identifying information will be provided to the audience. 
  - I do not meet any of the exclusion criteria of the study – I am 18-60 years old, have normal or corrected to normal vision, and no major physical impairments.
  - I am free to ask questions about the process at any time. I can ask questions in person, or by contacting Tovi Grossman at [tovi@dgp.toronto.edu](mailto:tovi@dgp.toronto.edu) or by telephone at 416-978-6763.  

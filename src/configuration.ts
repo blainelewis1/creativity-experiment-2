@@ -230,7 +230,7 @@ function zipfian(numberOfItems: number, s: number = 1): Array<number> {
 }
 
 const occurrenceCounts = zipfian(ranking.length, 1).map((k) =>
-  Math.floor(k * 40)
+  Math.floor(k * 80)
 );
 
 const distributedItems = zip(occurrenceCounts, ranking)
@@ -248,9 +248,22 @@ const conditions = zip(objects, menus).map(([object, menu]) => {
       {
         menu: menu,
         task: "CommandSelection",
-        children: shuffle(distributedItems).map((item) => ({
-          command: item,
-        })),
+        children: shuffle(distributedItems).flatMap((item) => [
+          {
+            task: "MousePositioning",
+            y: Math.random() * 400 - 200,
+            x: Math.random() * 400 - 200,
+          },
+          // {
+          //   task: "TypingTask",
+          //   prompt: item,
+          //   command: item,
+          // },
+
+          {
+            command: item,
+          },
+        ]),
       },
       {
         task: "BeginScreen",
@@ -290,29 +303,44 @@ const configuration = {
   tasks: ["ProgressBar", "DevTools"],
   DevTools: { showInProduction: false },
   children: [
-    // {
-    //   task: "ConsentForm",
+    {
+      task: "ConsentForm",
 
-    //   content: ConsentLetter,
-    //   questions: [
-    //     {
-    //       label: "I understand and consent to the above.",
-    //       required: true,
-    //     },
-    //     {
-    //       label:
-    //         "Yes: Video and audio recordings or frame grabs of the session may be used.",
-    //       required: false,
-    //     },
-    //     {
-    //       label:
-    //         "No: Video and audio recordings or frame grabs of the session may not be used.",
-    //       required: false,
-    //     },
-    //   ],
-    // },
+      content: ConsentLetter,
+      questions: [
+        {
+          label: "I understand and consent to the above.",
+          required: true,
+        },
+        // {
+        //   label:
+        //     "Yes: Video and audio recordings or frame grabs of the session may be used.",
+        //   required: false,
+        // },
+        // {
+        //   label:
+        //     "No: Video and audio recordings or frame grabs of the session may not be used.",
+        //   required: false,
+        // },
+      ],
+    },
+    {
+      task: "BeginScreen",
+      content: `
+# Menu Creativity Experiment
+
+This experiment will test your creativity while using different computer menus. You will be asked to complete a series of tasks:
+
+1. A short tutorial using the menu.
+2. Selections using the menu.
+3. A task to measure your creativity.
+4. A questionnaire about your experience.
+
+You will repeat this process for 3 different menus. Each menu should take approximately 8 minutes, with the entire experiment taking less than 30 minutes.`,
+    },
     {
       task: "FormTask",
+      label: "demographics",
       schema: {
         type: "object",
         properties: {
@@ -367,11 +395,6 @@ const configuration = {
       },
     },
     {
-      task: "InformationScreen",
-      content: `
-In order to complete this experiment you will first be given a computer menu, and taught how to use it. Following that you will complete a series of questionnaires about your experience. You will do this twice more with different menus. Please answer the questions about your experience carefully and take your time.`,
-    },
-    {
       task: "BeginScreen",
       content: `The next screen contains a timed task where you will be given an object and must think of unusual uses for it. Please read the instructions on the page carefully and use the full allotted time to complete the task.`,
     },
@@ -387,14 +410,30 @@ In order to complete this experiment you will first be given a computer menu, an
     },
     ...conditions,
     {
+      task: "FormTask",
+      label: "problems",
+      schema: {
+        type: "object",
+        properties: {
+          didYouEncounterAnyIssues: {
+            type: "string",
+          },
+        },
+      },
+    },
+    {
       task: "S3Upload",
       filename: `${participant_id}.json`,
       experimenter: "blaine@dgp.toronto.edu",
     },
+    // {
+    //   task: "RedirectTask",
+    //   url: "https://app.prolific.co/submissions/complete?cc=CLH2KZS1",
+    // },
     {
       task: "InformationScreen",
-      content: `
-Your data has successfully been uploaded. Thank you for completing our experiment!`,
+      content: `Your data has successfully been uploaded. Thank you for completing our experiment!`,
+      withContinue: false,
     },
   ],
 };
