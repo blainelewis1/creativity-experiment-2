@@ -7,6 +7,7 @@ import Experiment, {
   WizardProgress,
   withGridItem,
   ProgressText,
+  ResolutionChecker,
 } from "@hcikit/react";
 import S3Upload from "./S3Upload";
 
@@ -54,6 +55,7 @@ let tasks = {
   TypingTask,
   MousePositioning,
   RedirectTask,
+  ResolutionChecker,
 };
 
 const App: React.FunctionComponent = () => {

@@ -29,12 +29,25 @@ import { MenuItem } from "@blainelewis1/menus";
 import ConsentLetter from "./consent";
 import { getAllMetadata } from "@hcikit/workflow";
 
-const objects = shuffle(["knife", "brick", "shoe"]);
+let beginScreen = {
+  task: "BeginScreen",
+  content: `The next screen contains a timed task where you will be given an object and must think of unusual uses for it. Please read the instructions on the page carefully and use the full allotted time to complete the task. The prompt will look like:
+
+> Write down all of the original and creative uses for a {object} that you can think of. There are common, unoriginal ways to use a {object}; for this task, write down all of the unusual, creative, and uncommon uses you can think of.`,
+};
+
+const objects = shuffle(["newspaper", "knife", "brick", "shoe"]);
 const menus = shuffle([
   "KeyboardShortcutsWithCheatsheet",
   "ToolPalette",
   "MarkingMenu",
 ]);
+
+const menuMappings: Record<string, string> = {
+  KeyboardShortcutsWithCheatsheet: "keyboard shortcuts",
+  ToolPalette: "tool palette",
+  MarkingMenu: "marking menu",
+};
 
 // TODO: add shortcuts.
 const items = [
@@ -76,7 +89,7 @@ const items = [
     ],
     unselectable: true,
     label: "Formatting",
-    angle: Math.PI / 4,
+    angle: (3 * Math.PI) / 2,
   },
   {
     items: [
@@ -148,13 +161,13 @@ const items = [
         icon: FormatListBulleted,
         label: "Bulleted list",
         shortcut: "mod+shift+8",
-        angle: (3 * Math.PI) / 2,
+        angle: (5 * Math.PI) / 4,
       },
       {
         icon: FormatListNumbered,
         label: "Numbered list",
         shortcut: "mod+shift+7",
-        angle: Math.PI / 2,
+        angle: (7 * Math.PI) / 4,
       },
       {
         icon: FormatIndentDecrease,
@@ -169,7 +182,7 @@ const items = [
         angle: 0,
       },
     ],
-    angle: (5 * Math.PI) / 4,
+    angle: Math.PI / 2,
     unselectable: true,
     label: "Lists + Indent",
   },
@@ -230,7 +243,7 @@ function zipfian(numberOfItems: number, s: number = 1): Array<number> {
 }
 
 const occurrenceCounts = zipfian(ranking.length, 1).map((k) =>
-  Math.floor(k * 80)
+  Math.floor(k * 59)
 );
 
 const distributedItems = zip(occurrenceCounts, ranking)
@@ -238,8 +251,17 @@ const distributedItems = zip(occurrenceCounts, ranking)
   .flat();
 
 const url = new URL(window.location.href);
-const participant_id = url.searchParams.get("participant_id");
-const conditions = zip(objects, menus).map(([object, menu]) => {
+const participant_id =
+  url.searchParams.get("participant_id") ||
+  url.searchParams.get("PROLIFIC_PID") ||
+  "unknown";
+
+const study_id = url.searchParams.get("STUDY_ID") || "unknown";
+const session_id = url.searchParams.get("SESSION_ID") || "unknown";
+
+// http://creativity-experiment-1-websitebucket-y1wyp6druyor.s3-website.us-east-2.amazonaws.com/?PROLIFIC_PID={{%PROLIFIC_PID%}}&STUDY_ID={{%STUDY_ID%}}&SESSION_ID={{%SESSION_ID%}}
+
+const conditions = zip(objects.slice(1), menus).map(([object, menu]) => {
   return {
     menu,
     items,
@@ -265,10 +287,7 @@ const conditions = zip(objects, menus).map(([object, menu]) => {
           },
         ]),
       },
-      {
-        task: "BeginScreen",
-        content: `The next screen contains a timed task where you will be given an object and must think of unusual uses for it. Please read the instructions on the page carefully and use the full allotted time to complete the task.`,
-      },
+      beginScreen,
       {
         task: "DivergentTest",
         question: `Write down all of the original and creative
@@ -283,7 +302,9 @@ const conditions = zip(objects, menus).map(([object, menu]) => {
         task: "Questionnaire",
         questions: [
           "I felt creative while I was selecting commands.",
-          "I would like to use that command selection technique while doing a creative task like drawing or writing a story.",
+          `Using a ${
+            menuMappings[menu as string]
+          } within a content creation tool (drawing, writing, etc.) would help me be creative.`,
         ],
       },
       { task: "NasaTlx" },
@@ -295,13 +316,21 @@ const conditions = zip(objects, menus).map(([object, menu]) => {
 const configuration = {
   participant_id,
   metadata: {
-    ...getAllMetadata,
+    ...getAllMetadata(),
     git_commit: process.env.REACT_APP_GIT_HASH,
     package_version: process.env.REACT_APP_PACKAGE_VERSION,
     build_time: process.env.REACT_APP_BUILD_TIME,
+    session_id,
+    study_id,
+    participant_id,
   },
-  tasks: ["ProgressBar", "DevTools"],
-  DevTools: { showInProduction: false },
+  version: "prolific-pilot@1",
+  tasks: ["ProgressBar", "ResolutionChecker", "DevTools"],
+  ResolutionChecker: {
+    minXResolution: 900,
+    minYResolution: 700,
+  },
+  // DevTools: { showInProduction: true },
   children: [
     {
       task: "ConsentForm",
@@ -336,105 +365,105 @@ This experiment will test your creativity while using different computer menus. 
 3. A task to measure your creativity.
 4. A questionnaire about your experience.
 
-You will repeat this process for 3 different menus. Each menu should take approximately 8 minutes, with the entire experiment taking less than 30 minutes.`,
-    },
-    {
-      task: "FormTask",
-      label: "demographics",
-      schema: {
-        type: "object",
-        properties: {
-          age: {
-            type: "integer",
-          },
-          gender: {
-            type: "string",
-            enum: [
-              "woman",
-              "man",
-              "non-binary",
-              "prefer not to disclose",
-              "prefer to self-describe",
-            ],
-          },
-          selfDescribe: {
-            type: "string",
-          },
-        },
-        required: ["age", "gender"],
-      },
-      uischema: {
-        type: "VerticalLayout",
-        elements: [
-          {
-            type: "Control",
-            label: "Age",
-            scope: "#/properties/age",
-          },
+You will repeat this process for 3 different menus. Each menu should take approximately 8 minutes, with the entire experiment taking less than 30 minutes.
 
-          {
-            type: "Control",
-            label: "Gender",
-            scope: "#/properties/gender",
-          },
-          {
-            type: "Control",
-            label: "Gender",
-            scope: "#/properties/selfDescribe",
-            rule: {
-              effect: "SHOW",
-              condition: {
-                scope: "#/properties/gender",
-                schema: {
-                  const: "prefer to self-describe",
-                },
-              },
-            },
-          },
-        ],
-      },
+We ask that you please maximise the experiment and perform the task in a quiet room without any music or distractions.`,
     },
-    {
-      task: "BeginScreen",
-      content: `The next screen contains a timed task where you will be given an object and must think of unusual uses for it. Please read the instructions on the page carefully and use the full allotted time to complete the task.`,
-    },
+    // {
+    //   task: "FormTask",
+    //   label: "demographics",
+    //   schema: {
+    //     type: "object",
+    //     properties: {
+    //       age: {
+    //         type: "integer",
+    //       },
+    //       gender: {
+    //         type: "string",
+    //         enum: [
+    //           "woman",
+    //           "man",
+    //           "non-binary",
+    //           "prefer not to disclose",
+    //           "prefer to self-describe",
+    //         ],
+    //       },
+    //       selfDescribe: {
+    //         type: "string",
+    //       },
+    //     },
+    //     required: ["age", "gender"],
+    //   },
+    //   uischema: {
+    //     type: "VerticalLayout",
+    //     elements: [
+    //       {
+    //         type: "Control",
+    //         label: "Age",
+    //         scope: "#/properties/age",
+    //       },
+
+    //       {
+    //         type: "Control",
+    //         label: "Gender",
+    //         scope: "#/properties/gender",
+    //       },
+    //       {
+    //         type: "Control",
+    //         label: "Gender",
+    //         scope: "#/properties/selfDescribe",
+    //         rule: {
+    //           effect: "SHOW",
+    //           condition: {
+    //             scope: "#/properties/gender",
+    //             schema: {
+    //               const: "prefer to self-describe",
+    //             },
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // },
+    beginScreen,
     {
       task: "DivergentTest",
       question: `Write down all of the original and creative
-      uses for a ${"newspaper"} that you can think of. There are common,
-      unoriginal ways to use a ${"newspaper"}; for this task, write down all of the
+      uses for a ${objects[0]} that you can think of. There are common,
+      unoriginal ways to use a ${objects[0]}; for this task, write down all of the
       unusual, creative, and uncommon uses you can think of.`,
-      object: "newspaper",
+      object: objects[0],
       // timeLimit: 60 * 1000 * 0.5,
       timeLimit: 60 * 1000 * 3,
     },
     ...conditions,
-    {
-      task: "FormTask",
-      label: "problems",
-      schema: {
-        type: "object",
-        properties: {
-          didYouEncounterAnyIssues: {
-            type: "string",
-          },
-        },
-      },
-    },
+    // {
+    //   defaultState: true,
+    //   task: "FormTask",
+    //   label: "problems",
+    //   schema: {
+    //     type: "object",
+    //     properties: {
+    //       DidYouEncounterAnyIssues: {
+    //         type: "string",
+    //       },
+    //     },
+    //   },
+    // },
     {
       task: "S3Upload",
       filename: `${participant_id}.json`,
       experimenter: "blaine@dgp.toronto.edu",
     },
-    // {
-    //   task: "RedirectTask",
-    //   url: "https://app.prolific.co/submissions/complete?cc=CLH2KZS1",
-    // },
     {
-      task: "InformationScreen",
-      content: `Your data has successfully been uploaded. Thank you for completing our experiment!`,
-      withContinue: false,
+      task: "RedirectTask",
+      url: "https://app.prolific.co/submissions/complete?cc=C6S70LIF",
     },
+    // {
+    //   task: "InformationScreen",
+    //   content: `Your data has successfully been uploaded. Thank you for completing our experiment!`,
+    //   withContinue: false,
+    // },
   ],
 };
 

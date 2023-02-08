@@ -15,10 +15,8 @@ const FormTask: FunctionTask<{
 }> = ({ defaultState, schema, uischema }) => {
   const [data, setData] = useState(defaultState);
   const [errors, setErrors] = useState<JsonFormsCore["errors"]>([]);
-
+  console.log(errors);
   const { advance, log } = useExperiment();
-
-  console.log(errors, data);
 
   return (
     <CenteredNicePaper>

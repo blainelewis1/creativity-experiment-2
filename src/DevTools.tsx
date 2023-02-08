@@ -92,6 +92,7 @@ export const DevTools: React.FunctionComponent<{
       label: getPropsFor(configuration, [i]).task,
     }));
   }
+
   // return null;
   return (
     <StyledCard
@@ -105,10 +106,33 @@ export const DevTools: React.FunctionComponent<{
       style={position}
     >
       <Controls>
-        <IconButton disabled>
+        <IconButton
+          onClick={() => {
+            let currentIndex = getCurrentIndex(configuration);
+            let newIndex = currentIndex.slice(
+              0,
+              currentIndex.length > 1 ? currentIndex.length - 1 : 1
+            );
+
+            newIndex[newIndex.length - 1] = newIndex[newIndex.length - 1] - 1;
+            experiment.advance(getLeafIndex(configuration, newIndex));
+          }}
+        >
           <SkipPrevious />
         </IconButton>
-        <IconButton disabled>
+        <IconButton
+          onClick={() =>
+            experiment.advance(
+              taskNumberToIndex(
+                configuration,
+                indexToTaskNumber(
+                  configuration,
+                  getCurrentIndex(configuration)
+                ) - 1
+              )
+            )
+          }
+        >
           <FastRewind />
         </IconButton>
         <IconButton onClick={() => experiment.advance()}>
@@ -117,7 +141,18 @@ export const DevTools: React.FunctionComponent<{
             Next &gt;
           </div> */}
         </IconButton>
-        <IconButton disabled>
+        <IconButton
+          onClick={() => {
+            let currentIndex = getCurrentIndex(configuration);
+            let newIndex = currentIndex.slice(
+              0,
+              currentIndex.length > 1 ? currentIndex.length - 1 : 1
+            );
+
+            newIndex[newIndex.length - 1] = newIndex[newIndex.length - 1] + 1;
+            experiment.advance(getLeafIndex(configuration, newIndex));
+          }}
+        >
           <SkipNext />
         </IconButton>
       </Controls>

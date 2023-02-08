@@ -14,7 +14,7 @@ I understand the following:
  - The study will take place remotely, at a convenient location of my choosing  
  - The researchers do not foresee any risks or stresses beyond what one might experience in day-to-day living and interacting with consumer electronics devices.  
  - By participating in this study I will have the opportunity to experience cutting-edge research computing environment. No other direct benefits are associated with the study.  
- - I will be compensated a total of ==$NEED VALUE==.  
+ - I will be compensated a total of £4.50.  
  - All data collected about me will be kept secure. In all data files, my name and identifying features will be removed and replaced with a code in order to preserve my confidentiality. Only the researchers involved in this study will have access to the information I provide. The data collected will be destroyed 5 years after publication of results.
  - Data collected may be used in research journals, conferences, or other scholarly activities. In these cases, my name will not be used and will be replaced with an identifier (e.g., Participant 1) and no identifying information will be provided to the audience. 
  - I do not meet any of the exclusion criteria of the study – I am 18-60 years old, have normal or corrected to normal vision, and no major physical impairments.
