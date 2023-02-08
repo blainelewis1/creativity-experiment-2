@@ -1,0 +1,35 @@
+participant_id,menu,object,values,topTwo
+1,KeyboardShortcutsWithCheatsheet,shoe,as a tennis ball,True
+1,KeyboardShortcutsWithCheatsheet,shoe,to collect seasoning off the ground,True
+1,MarkingMenu,knife,as a research companion to talk to,True
+1,MarkingMenu,knife,as a lightning rod,True
+1,ToolPalette,brick,to collect some rain water and have a drink,True
+1,ToolPalette,brick,to use as a basketball,True
+2,KeyboardShortcutsWithCheatsheet,brick,Break windows,True
+2,KeyboardShortcutsWithCheatsheet,brick,Hold things in place like paper,True
+2,MarkingMenu,shoe,Building a structure with it,True
+2,MarkingMenu,shoe,Painting with it,True
+2,ToolPalette,knife,Open cans,True
+2,ToolPalette,knife,Clean dirty surfaces,True
+3,KeyboardShortcutsWithCheatsheet,brick,making lego castles,True
+3,KeyboardShortcutsWithCheatsheet,brick,painting them white and creating an igloo,True
+3,MarkingMenu,shoe,using a shoe as a flower pot,True
+3,MarkingMenu,shoe,using an upside down shoe as a small house for a mouse,True
+3,ToolPalette,knife,peeling a fruit or a potato,True
+3,ToolPalette,knife,creating new knives or other tools,True
+dwrzakqvmj-default,KeyboardShortcutsWithCheatsheet,knife,as a lightsaber,True
+dwrzakqvmj-default,KeyboardShortcutsWithCheatsheet,knife,scissors,True
+dwrzakqvmj-default,MarkingMenu,shoe,baseball,True
+dwrzakqvmj-default,MarkingMenu,shoe,dodgeball,True
+dwrzakqvmj-default,ToolPalette,brick,basketball,True
+dwrzakqvmj-default,ToolPalette,brick,weights,True
+dwrzakqvmj-default,baseline,newspaper,Paper Airplane,True
+dwrzakqvmj-default,baseline,newspaper,as a tissue,True
+pxtxod805s-default,KeyboardShortcutsWithCheatsheet,brick,Crush it and mix the dust with water to paint,True
+pxtxod805s-default,KeyboardShortcutsWithCheatsheet,brick,crush it and mix it with glue to sculpt with it,True
+pxtxod805s-default,MarkingMenu,newspaper,soak it with water to transfer the ink to a piece of cloth,True
+pxtxod805s-default,MarkingMenu,newspaper,Make an envelope out of it,True
+pxtxod805s-default,ToolPalette,knife,Make it a cabinet handle,True
+pxtxod805s-default,ToolPalette,knife,Use it as a popsicle stick,True
+pxtxod805s-default,baseline,shoe,Put them on the feet of tables or chairs to prevent scuffing,True
+pxtxod805s-default,baseline,shoe,Cut pieces of the rubber tread to use for corks,True

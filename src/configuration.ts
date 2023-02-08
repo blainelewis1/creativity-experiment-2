@@ -250,11 +250,13 @@ const distributedItems = zip(occurrenceCounts, ranking)
   .map(([count, item]) => times(count ?? 0, () => item ?? ""))
   .flat();
 
+const metadata = getAllMetadata();
+
 const url = new URL(window.location.href);
 const participant_id =
   url.searchParams.get("participant_id") ||
   url.searchParams.get("PROLIFIC_PID") ||
-  "unknown";
+  metadata.participant;
 
 const study_id = url.searchParams.get("STUDY_ID") || "unknown";
 const session_id = url.searchParams.get("SESSION_ID") || "unknown";
@@ -297,14 +299,23 @@ const conditions = zip(objects.slice(1), menus).map(([object, menu]) => {
         object,
         // timeLimit: 60 * 1000 * 0.5,
         timeLimit: 60 * 1000 * 3,
+        menu: "baseline",
       },
       {
         task: "Questionnaire",
         questions: [
-          "I felt creative while I was selecting commands.",
-          `Using a ${
-            menuMappings[menu as string]
-          } within a content creation tool (drawing, writing, etc.) would help me be creative.`,
+          {
+            label: "I felt creative while I was selecting commands.",
+            key: "felt",
+          },
+          {
+            label: `Using ${
+              menu === "KeyboardShortcutsWithCheatsheet" ? "" : "a "
+            }${
+              menuMappings[menu as string]
+            } within a content creation tool (drawing, writing, etc.) would help me be creative.`,
+            key: "imagine",
+          },
         ],
       },
       { task: "NasaTlx" },
@@ -314,9 +325,10 @@ const conditions = zip(objects.slice(1), menus).map(([object, menu]) => {
 });
 
 const configuration = {
+  order: menus,
   participant_id,
   metadata: {
-    ...getAllMetadata(),
+    ...metadata,
     git_commit: process.env.REACT_APP_GIT_HASH,
     package_version: process.env.REACT_APP_PACKAGE_VERSION,
     build_time: process.env.REACT_APP_BUILD_TIME,
@@ -324,8 +336,8 @@ const configuration = {
     study_id,
     participant_id,
   },
-  version: "prolific-pilot@1",
-  tasks: ["ProgressBar", "ResolutionChecker", "DevTools"],
+  version: "prolific-pilot@2",
+  tasks: ["ProgressBar", "ResolutionChecker"],
   ResolutionChecker: {
     minXResolution: 900,
     minYResolution: 700,
@@ -450,6 +462,9 @@ We ask that you please maximise the experiment and perform the task in a quiet r
     //     },
     //   },
     // },
+    {
+      task: "AdditionalComments",
+    },
     {
       task: "S3Upload",
       filename: `${participant_id}.json`,

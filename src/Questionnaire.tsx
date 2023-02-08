@@ -4,7 +4,7 @@ import Slider from "./components/Slider";
 import { useExperiment } from "@hcikit/react";
 
 const Questionnaire: React.FunctionComponent<{
-  questions: Array<string>;
+  questions: Array<{ label: string; key: string }>;
   title: string;
 }> = ({ questions, title }) => {
   const { log, advance } = useExperiment();
@@ -12,7 +12,7 @@ const Questionnaire: React.FunctionComponent<{
   const [responses, setResponses] = useState<
     Record<string, number | undefined>
   >(() =>
-    questions.reduce((acc, question) => ({ ...acc, [question]: undefined }), {})
+    questions.reduce((acc, { key }) => ({ ...acc, [key]: undefined }), {})
   );
 
   return (
@@ -34,9 +34,9 @@ const Questionnaire: React.FunctionComponent<{
         Please rate your agreement with the following statements:
       </p>
       <div className="grid gap-10 px-4">
-        {questions.map((question) => (
+        {questions.map(({ key, label }) => (
           <div>
-            <p className="mb-3 text-lg font-light text-gray-700">{question}</p>
+            <p className="mb-3 text-lg font-light text-gray-700">{label}</p>
             <div className="flex gap-4 px-8 text-center">
               <span className="text-sm text-gray-700">Highly Disagree</span>
               <Slider
@@ -46,10 +46,10 @@ const Questionnaire: React.FunctionComponent<{
                 onChange={(e) => {
                   setResponses((prev) => ({
                     ...prev,
-                    [question]: e.target.valueAsNumber,
+                    [key]: e.target.valueAsNumber,
                   }));
                 }}
-                value={responses[question]}
+                value={responses[key]}
               />
               <span className="text-sm text-gray-700">Highly Agree</span>
             </div>
