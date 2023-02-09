@@ -14,7 +14,7 @@ const CommandSelection: React.FunctionComponent<{
   const Menu = (menus as Record<string, MenuComponent>)[menu] || null;
 
   return (
-    <div className="flex flex-col h-full gap-4 py-8 mx-auto">
+    <div className="flex flex-col gap-4 py-8 mx-auto">
       <div className={`text-center  `}>
         <span className="text-xl text-gray-700">{command}</span>
         <span className="text-sm text-gray-400">

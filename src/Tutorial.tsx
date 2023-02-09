@@ -42,7 +42,7 @@ const Tutorial: React.FunctionComponent<{
   };
 
   return (
-    <div className="flex flex-col h-full max-w-4xl py-8 mx-auto">
+    <div className="flex flex-col max-w-4xl py-8 mx-auto">
       <div className="prose">
         <h1>Tutorial</h1>
         {/* @ts-ignore */}
