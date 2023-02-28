@@ -1,5 +1,5 @@
 {
-  "name": "creativity-experiment-1",
+  "name": "creativity-experiment-2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,6 +15,7 @@
     "@mui/material": "^5.11.6",
     "@mui/styles": "^5.11.2",
     "@mui/x-date-pickers": "^5.0.16",
+    "@radix-ui/react-icons": "^1.2.0",
     "@tailwindcss/typography": "0.5.9",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^13.4.0",

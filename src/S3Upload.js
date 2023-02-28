@@ -5,8 +5,8 @@
   let uploadComponent = createUpload(
   createS3Uploader(
     "us-east-2",
-    "us-east-2:aeebe413-bb45-4512-b33a-c0b1e1fbef9b",
-    "creativity-experiment-1-uploadsbucket-16nn03sec0bey"
+    "us-east-2:b9ecdb71-7052-40e3-acba-4a05686e9984",
+    "creativity-experiment-2-uploadsbucket-81uouy2gq5h6"
   )
   );
 

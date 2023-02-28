@@ -28,6 +28,9 @@ import { MenuItem } from "@blainelewis1/menus";
 
 import ConsentLetter from "./consent";
 import { getAllMetadata } from "@hcikit/workflow";
+import starterDocument from "./starter.json";
+
+console.log(starterDocument);
 
 let beginScreen = {
   task: "BeginScreen",
@@ -270,14 +273,13 @@ const conditions = zip(objects.slice(1), menus).map(([object, menu]) => {
     children: [
       { task: "Tutorial" },
       {
-        menu: menu,
         task: "CommandSelection",
         children: shuffle(distributedItems).flatMap((item) => [
-          {
-            task: "MousePositioning",
-            y: Math.random() * 400 - 200,
-            x: Math.random() * 400 - 200,
-          },
+          // {
+          //   task: "MousePositioning",
+          //   y: Math.random() * 400 - 200,
+          //   x: Math.random() * 400 - 200,
+          // },
           // {
           //   task: "TypingTask",
           //   prompt: item,
@@ -290,17 +292,16 @@ const conditions = zip(objects.slice(1), menus).map(([object, menu]) => {
         ]),
       },
       beginScreen,
-      {
-        task: "DivergentTest",
-        question: `Write down all of the original and creative
-        uses for a ${object} that you can think of. There are common,
-        unoriginal ways to use a ${object}; for this task, write down all of the
-        unusual, creative, and uncommon uses you can think of.`,
-        object,
-        // timeLimit: 60 * 1000 * 0.5,
-        timeLimit: 60 * 1000 * 3,
-        menu: "baseline",
-      },
+      // {
+      //   task: "DivergentTest",
+      //   question: `Write down all of the original and creative
+      //   uses for a ${object} that you can think of. There are common,
+      //   unoriginal ways to use a ${object}; for this task, write down all of the
+      //   unusual, creative, and uncommon uses you can think of.`,
+      //   object,
+      //   // timeLimit: 60 * 1000 * 0.5,
+      //   timeLimit: 60 * 1000 * 3,
+      // },
       {
         task: "Questionnaire",
         questions: [
@@ -336,14 +337,18 @@ const configuration = {
     study_id,
     participant_id,
   },
-  version: "prolific-pilot@2",
-  tasks: ["ProgressBar", "ResolutionChecker"],
+
+  version: "alpha@0.1",
+  tasks: ["ProgressBar", "ResolutionChecker", "DevTools"],
   ResolutionChecker: {
     minXResolution: 900,
     minYResolution: 700,
   },
-  // DevTools: { showInProduction: true },
+  DevTools: { showInProduction: true },
   children: [
+    // { task: "TLDrawTask", starterDocument },
+    // ...menus.map((menu) => ({ task: "TLDrawTask", starterDocument, menu })),
+
     {
       task: "ConsentForm",
 
@@ -439,7 +444,7 @@ We ask that you please maximise the experiment and perform the task in a quiet r
     // },
     beginScreen,
     {
-      task: "DivergentTest",
+      task: "TLDrawTask",
       question: `Write down all of the original and creative
       uses for a ${objects[0]} that you can think of. There are common,
       unoriginal ways to use a ${objects[0]}; for this task, write down all of the
@@ -447,6 +452,7 @@ We ask that you please maximise the experiment and perform the task in a quiet r
       object: objects[0],
       // timeLimit: 60 * 1000 * 0.5,
       timeLimit: 60 * 1000 * 3,
+      menu: "baseline",
     },
     ...conditions,
     // {

@@ -26,6 +26,7 @@ import MousePositioning from "./MousePositioning";
 import Portalinator from "./Portalinator";
 import RedirectTask from "./RedirectTask";
 import AdditionalComments from "./AdditionalComments";
+import TLDrawTask from "./TLDrawTask";
 
 const ProseConsentForm = withGridItem(({ children, ...props }) => {
   return (
@@ -58,6 +59,7 @@ let tasks = {
   RedirectTask,
   ResolutionChecker,
   AdditionalComments,
+  TLDrawTask,
 };
 
 const App: React.FunctionComponent = () => {

@@ -48,7 +48,7 @@ export const DevTools: React.FunctionComponent<{
   const [isDragging, setIsDragging] = useState(false);
   const [relativePosition, setRelativePosition] = useState({ x: 0, y: 0 });
 
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [position, setPosition] = useState({ bottom: 0, right: 0 });
 
   // TODO: I broke dragging
   useEffect(() => {
@@ -56,8 +56,8 @@ export const DevTools: React.FunctionComponent<{
       if (isDragging) {
         // TODO: use bottom right instead.
         setPosition({
-          top: e.pageY - relativePosition.y,
-          left: e.pageX - relativePosition.x,
+          bottom: e.pageY - relativePosition.y,
+          right: e.pageX - relativePosition.x,
         });
       }
     }
@@ -96,14 +96,15 @@ export const DevTools: React.FunctionComponent<{
   // return null;
   return (
     <StyledCard
+      className="p-4"
       onMouseDown={(e: React.MouseEvent) => {
-        setIsDragging(true);
-        setRelativePosition({
-          x: e.pageX - position.left,
-          y: e.pageY - position.top,
-        });
+        // setIsDragging(true);
+        // setRelativePosition({
+        //   x: e.pageX - position.left,
+        //   y: e.pageY - position.top,
+        // });
       }}
-      style={position}
+      style={{ ...position, zIndex: 1000 }}
     >
       <Controls>
         <IconButton
