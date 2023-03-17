@@ -38,8 +38,10 @@ import circle from "./circles.json";
 import square from "./squares.json";
 import triangle from "./triangles.json";
 
+const url = new URL(window.location.href);
+
 const instructions =
-  "Add details to the shapes to make pictures out of them. Make the shape a part of any picture you make. Try to think of pictures no one else will think of. Add details to tell complete stories with your pictures. You have 5 minutes.";
+  "Add details to the shapes to make pictures out of them. Each shape should be it's own independent picture. Make the shape a part of any picture you make. Try to think of pictures no one else will think of. Add details to tell complete stories with your pictures. You have 5 minutes.";
 
 let beginScreen = {
   task: "BeginScreen",
@@ -54,11 +56,14 @@ An example of this task can be found below, but you will see a different set of 
 };
 
 const starterDocuments = shuffle([circle, square, triangle]);
-const menus = shuffle([
-  "KeyboardShortcutsWithCheatsheet",
-  "ToolPalette",
-  "MarkingMenu",
-]);
+
+let menus = decodeURIComponent(
+  url.searchParams.get("MENU_ORDER") as string
+).split(",");
+
+menus =
+  menus ||
+  shuffle(["KeyboardShortcutsWithCheatsheet", "ToolPalette", "MarkingMenu"]);
 
 const menuMappings: Record<string, string> = {
   KeyboardShortcutsWithCheatsheet: "keyboard shortcuts",
@@ -339,7 +344,6 @@ const distributedItems = flattenMenu(items)
 
 const metadata = getAllMetadata();
 
-const url = new URL(window.location.href);
 const participant_id =
   url.searchParams.get("participant_id") ||
   url.searchParams.get("PROLIFIC_PID") ||
@@ -378,7 +382,7 @@ const conditions = zip(starterDocuments, menus).map(
         },
         beginScreen,
         {
-          tasks: ["ProgressBar", "ResolutionChecker", "DevTools"],
+          tasks: ["ProgressBar", "ResolutionChecker"],
           content: instructions,
           task: "TLDrawTask",
           starterDocument,
@@ -436,7 +440,7 @@ const configuration = {
   },
 
   version: "alpha@0.1",
-  tasks: ["ProgressBar", "ResolutionChecker", "DevTools"],
+  tasks: ["ProgressBar", "ResolutionChecker"],
   ResolutionChecker: {
     minXResolution: 900,
     minYResolution: 700,
