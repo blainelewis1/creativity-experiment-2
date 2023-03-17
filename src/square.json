@@ -1,0 +1,66 @@
+{
+  "name": "New Document",
+  "fileHandle": {},
+  "document": {
+    "id": "doc",
+    "name": "New Document",
+    "version": 15.5,
+    "pages": {
+      "page": {
+        "id": "page",
+        "name": "Page 1",
+        "childIndex": 1,
+        "shapes": {
+          "c694bae3-c6d5-4650-0a57-c91b71feeba3": {
+            "isLocked": true,
+            "id": "c694bae3-c6d5-4650-0a57-c91b71feeba3",
+            "type": "rectangle",
+            "name": "Rectangle",
+            "parentId": "page",
+            "childIndex": 2,
+            "point": [
+              632.54,
+              420.54
+            ],
+            "size": [
+              323.47,
+              323.47
+            ],
+            "rotation": 0,
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": true,
+              "dash": "solid",
+              "scale": 1,
+              "font": "sans"
+            },
+            "label": "",
+            "labelPoint": [
+              0.5,
+              0.5
+            ]
+          }
+        },
+        "bindings": {}
+      }
+    },
+    "pageStates": {
+      "page": {
+        "id": "page",
+        "selectedIds": [
+          "c694bae3-c6d5-4650-0a57-c91b71feeba3"
+        ],
+        "camera": {
+          "point": [
+            0,
+            0
+          ],
+          "zoom": 1
+        }
+      }
+    },
+    "assets": {}
+  },
+  "assets": {}
+}

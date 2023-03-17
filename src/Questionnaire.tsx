@@ -33,7 +33,7 @@ const Questionnaire: React.FunctionComponent<{
       <p className="mb-4 font-bold">
         Please rate your agreement with the following statements:
       </p>
-      <div className="grid gap-10 px-4">
+      <div className="grid gap-10 px-4 min-w-[800px]">
         {questions.map(({ key, label }) => (
           <div>
             <p className="mb-3 text-lg font-light text-gray-700">{label}</p>

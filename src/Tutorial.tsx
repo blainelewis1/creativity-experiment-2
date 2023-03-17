@@ -34,11 +34,11 @@ const Tutorial: React.FunctionComponent<{
       "A tool palette simply requires you to click on the tool you would like to select.",
     MarkingMenu: `A marking menu has two modes of invocation:
 - As a beginner:
-  1. Press the mouse button down and wait for a short delay. 
+  1. Press the alt or option key and then the mouse button down and wait for a short delay. 
   2. After the delay, the menu items appear and you can simply draw a mark towards one of the items and release the mouse button to select it.
   3. In some cases there is a hierarchy of items and you must draw to the location of the parent item, and then its children will appear. 
   4. You can then complete the selection as before, by drawing a line to the item and then releasing.
-- Alternatively you can select an item without waiting for the delay, simply by drawing the corresponding mark.`,
+- Alternatively you can select an item without waiting for the delay, simply by pressing the alt or option key and then drawing the corresponding mark.`,
   };
 
   return (

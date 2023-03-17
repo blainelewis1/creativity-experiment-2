@@ -7,7 +7,6 @@ const TypingTask: React.FC<{ prompt: string }> = ({ prompt }) => {
   const [index, setIndex] = useState(0);
   useEffect(() => {
     function handleKey({ key }: KeyboardEvent) {
-      console.log(key);
       log({ key, type: "KEY_PRESSED" });
 
       if (key === prompt[index]) {

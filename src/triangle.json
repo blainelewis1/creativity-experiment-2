@@ -1,0 +1,65 @@
+{
+  "name": "New Document",
+  "fileHandle": null,
+  "document": {
+    "id": "doc",
+    "name": "New Document",
+    "version": 15.5,
+    "pages": {
+      "page": {
+        "id": "page",
+        "name": "Page 1",
+        "childIndex": 1,
+        "shapes": {
+          "dff188d3-1eb5-4880-32c9-b8b43c1c6c58": {
+            "isLocked": true,
+            "id": "dff188d3-1eb5-4880-32c9-b8b43c1c6c58",
+            "type": "triangle",
+            "name": "Triangle",
+            "parentId": "page",
+            "childIndex": 2,
+            "point": [
+              633.34,
+              420.93
+            ],
+            "size": [
+              306.13,
+              306.13
+            ],
+            "rotation": 0,
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": true,
+              "dash": "solid",
+              "scale": 1,
+              "font": "sans"
+            },
+            "label": "",
+            "labelPoint": [
+              0.5,
+              0.5
+            ]
+          }
+        },
+        "bindings": {}
+      }
+    },
+    "pageStates": {
+      "page": {
+        "id": "page",
+        "selectedIds": [],
+        "camera": {
+          "point": [
+            0,
+            0
+          ],
+          "zoom": 1
+        },
+        "editingId": null
+      }
+    },
+    "assets": {}
+  },
+  "assets": {}
+}
